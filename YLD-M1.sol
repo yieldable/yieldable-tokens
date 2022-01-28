@@ -344,23 +344,20 @@ contract ERC20 is Context, IERC20, Managed, Lockable
 	uint8 private _decimals;
 	
 	/**
-	* @dev Sets the values for {owner}, {manager} and {depositAddress}.
-	*
-	* The default value of {decimals} is 18. To select a different value for
-	* {decimals} you should overload it.
+	* @dev Sets the values for {name}, {symbol}, {decimals}, {totalSupply} {owner}, {manager} and {depositAddress}.
 	*
 	* All values for token parameters are immutable: they can only be set once during
 	* construction.
 	*/
-	constructor(address owner_, address manager_, address depositAddress) Managed(owner_, manager_)
+	constructor(string memory name_, string memory symbol_, uint8 decimals_, uint256 totalSupply_, address owner_, address manager_, address depositAddress) Managed(owner_, manager_)
 	{
 		require(depositAddress != address(0), "Initial deposit address can't be a zero address");
 		
-		_name = "Yield-Minerals1";
-		_symbol = "YLD-M1";
-		_decimals = 8;
+		_name = name_;
+		_symbol = symbol_;
+		_decimals = decimals_;
 		
-		_totalSupply = 1000000 * uint256(10**_decimals);
+		_totalSupply = totalSupply_ * uint256(10**_decimals);
 		_balances[depositAddress] = _totalSupply;
 		
 		emit Transfer(address(0), depositAddress, _totalSupply);
